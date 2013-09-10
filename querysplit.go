@@ -29,7 +29,7 @@ func NewQuerySplitter(base string, splitKey string, otherKeys []string) QuerySpl
   return q
 }
 
-func (q *QuerySplitter) Split(s string) []string {
+func (q *QuerySplitter) Split(s string) ([]string, []string) {
   splitMatches :=  q.splitterRegex.FindAllStringSubmatch(s, -1)
   splits := make([]string, 1)
   for i := range splitMatches {
@@ -51,7 +51,7 @@ func (q *QuerySplitter) Split(s string) []string {
       queries[i] = fmt.Sprintf("%s&%s=%s", queries[i], q.otherKeys[j], responses[j])
     }
   }
-  return queries
+  return queries, splits
 }
 
 
